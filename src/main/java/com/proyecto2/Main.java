@@ -1,75 +1,66 @@
 package com.proyecto2;
 import java.util.Scanner;
-import java.util.Random;
 public class Main {
     public static void main(String[] args) {
 
+          String[][] bingo;
+        bingo =new String [5][5];
+        boolean[] generado=new boolean[101];
+
         Scanner sc = new Scanner(System.in);
-        Random random = new Random();
 
-        int[][] bingo = new int[5][5];
-
-        for (int i = 0; i < 5; i++) {
-
-            for (int j = 0; j < 5; j++) {
-
-                int numero = random.nextInt(75) + 1;
-
-                for (int x = 0; x < 5; x++) {
-
-                    for (int y = 0; y < 5; y++) {
-
-                        if (bingo[x][y] == numero) {
-
-                            numero = random.nextInt(75) + 1;
-
-                            x = 0;
-                            y = 0;
-                        }
-                    }
-                }
-
-                bingo[i][j] = numero;
+        for (int i = 0; i < bingo.length; i++) {
+            for (int j = 0; j < bingo[i].length; j++) {
+                int aux;
+            do{
+                aux=(int)(Math.random()*100)+1;
+             } while(generado[aux]);
+            
+             generado[aux]=true;
+            
+            bingo[i][j] = String.valueOf(aux);
             }
         }
-
-        System.out.println("===== BINGO =====");
-
-        for (int i = 0; i < 5; i++) {
-
-            for (int j = 0; j < 5; j++) {
-
+    
+        for (int i = 0; i < bingo.length; i++) {
+            for (int j = 0; j < bingo[i].length; j++) {
                 System.out.print(bingo[i][j] + "\t");
             }
-
             System.out.println();
         }
-
-        System.out.print("\nIngrese fila (0-4): ");
-        int filaX = sc.nextInt();
-
-        System.out.print("Ingrese columna (0-4): ");
-        int columnaX = sc.nextInt();
-
-        bingo[filaX][columnaX] = -1;
-
-        System.out.println("\n===== TABLA ACTUALIZADA =====");
-
-        for (int i = 0; i < 5; i++) {
-
-            for (int j = 0; j < 5; j++) {
-
-                if (bingo[i][j] == -1) {
-                    System.out.print("X\t");
-                }
-                else {
-                    System.out.print(bingo[i][j] + "\t");
-                }
+        while (true) {
+            System.out.println("Ingrese una fila (del 1 al 5) o presione 0 para SALIR: ");
+            int fila = sc.nextInt();
+            if(fila==0){
+                System.out.println("Gracias por jugar al bingo");
+                break;
             }
 
-            System.out.println();
-        }
+            System.out.println("Ingrese una columna (del 1 al 5) o presione 0 para SALIR: ");
+            int columna = sc.nextInt();
+            if(columna==0){
+                System.out.println("Gracias por jugar al bingo");
+                break;
+                }
 
+            int filaleer=fila-1;
+            int columnaleer=columna-1;
+
+            if(filaleer<0||filaleer>=5||columnaleer<0||columnaleer>=5){
+                System.out.println("El numero ingresado no es valido,Porfavor escoga del 1 al 5");
+
+            continue;
+            }
+
+            bingo[filaleer][columnaleer] = "X";
+
+            for (int i = 0; i < bingo.length; i++) {
+                for (int j = 0; j < bingo[i].length; j++) {
+                  System.out.print(bingo[i][j] + "\t");
+                }
+               System.out.println();
+            }
+        }
         sc.close();
+        } 
     }
-}
